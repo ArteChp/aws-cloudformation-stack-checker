@@ -19,6 +19,7 @@ Additionally:
 
 ## Structure 
 
+```
 ├── app.py
 ├── cdk.json
 ├── cfn_stack
@@ -39,7 +40,7 @@ Additionally:
         ├── test_check_nested_stack_errors.py
         ├── test_check_stack_errors.py
         └── test_check_stack_status.py
-
+```
 
 ## Components 
 

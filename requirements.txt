@@ -1,0 +1,3 @@
+boto3==1.35.55
+openapi-spec-validator==0.7.1
+aws-cdk-lib==2.166.0

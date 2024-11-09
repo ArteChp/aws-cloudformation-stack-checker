@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
+
 import boto3
 import json
 import sys
 import logging
 import time 
+import os
 from typing import Tuple, Dict, Any
 
 logging.basicConfig(level=logging.INFO)
@@ -47,7 +50,11 @@ def get_rollback_details(cfn_client, stack_name: str) -> Dict[str, Any]:
 
 def check_stack(stack_name: str) -> Dict[str, Any]:
     """Monitor stack status and retrieve rollback details if necessary."""
-    cfn_client = boto3.client('cloudformation', region_name='us-west-1')
+
+    session = boto3.Session()
+    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name  
+    
+    cfn_client = boto3.client('cloudformation', region_name=region)
 
     try:
         while True:

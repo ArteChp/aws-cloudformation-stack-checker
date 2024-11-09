@@ -1,4 +1,4 @@
-# AWS CloudFormation Stack Status Checker 
+# AWS CloudFormation Stack Checker 
 
 The purpose of this repository is to create a Python script to:
 
@@ -19,7 +19,6 @@ Additionally:
 
 ## Structure 
 
-```
 ├── app.py
 ├── cdk.json
 ├── cfn_stack
@@ -40,7 +39,7 @@ Additionally:
         ├── test_check_nested_stack_errors.py
         ├── test_check_stack_errors.py
         └── test_check_stack_status.py
-```
+
 
 ## Components 
 
@@ -59,7 +58,7 @@ The main components of this repository are:
 There are 2 ways to test the main script `check_stack.py`:
 
 1. Running unit tests (simple)
-2. Deploying failing stacks with AWS CDK and executing the script
+2. Deploying failing sample stacks with AWS CDK and executing the script
 
 ## Deployment steps
 
@@ -115,7 +114,7 @@ $ export AWS_DEFAULT_REGION=us-west-1
 $ python3 -m pytest tests/unit
 ```
 
-### II. Init Failing Stacks with CDK
+### II. Init Failing Sample Stacks with CDK
 
 Bootstrap the CDK stack:
 
@@ -129,7 +128,7 @@ Synthesize the CloudFormation template of the main stack:
 $ cdk synth --app "python3 app.py --stack_name=FailedStackName"
 ```
 
-Synthesize the CloudFormation template of the nested stack:
+Synthesize the CloudFormation template of the stack with the nested stack:
 
 ```
 $ cdk synth --app "python3 app.py --nested_stack_name=FailedNestedStackName"
@@ -144,24 +143,24 @@ Deploy the main stack:
 $ cdk deploy --app "python3 app.py --stack_name=FailedStackName"
 ```
 
-Deploy the nested stack:
+Deploy the stack with the nested stack:
 
 ```
 $ cdk synth --app "python3 app.py --nested_stack_name=FailedNestedStackName"
 ```
 
-*Both stacks are expected to fail as part of the testing setup.*
+**Both stacks are expected to fail as part of the testing setup.**
 
 
 ### Deploy Failing Sample Stacks
 
-Getting the JSON output of the main task:
+Getting the JSON output of the main stack:
 
 ```
 $ python3 check_stack.py FailedStackName
 ```
 
-Getting the JSON output of the nested task:
+Getting the JSON output of the stack with the nested stack:
 
 ```
 $ python3 check_stack.py FailedNestedStackName
@@ -172,7 +171,7 @@ $ python3 check_stack.py FailedNestedStackName
 
 ```
 1. `FailedStackName` : Name of the main CloudFormation stack (Mandatory)
-2. `FailedNestedStackName` : Name of the nested CloudFormation stack (Mandatory)
+2. `FailedNestedStackName` : Name of the CloudFormation stack with nested stack (Mandatory)
 ```
 
 

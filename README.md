@@ -120,7 +120,7 @@ $ python3 -m pytest tests/unit
 Bootstrap the CDK stack:
 
 ```
-$ cdk bootstrap 
+$ cdk --app "python3 app.py --stack_name=FailedStackName --nested_stack_name=FailedNestedStackName" bootstrap 
 ```
 
 Synthesize the CloudFormation template of the main stack and the stack with the nested stack:

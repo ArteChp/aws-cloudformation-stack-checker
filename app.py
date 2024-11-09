@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
 import os
-import sys 
+import sys
 import boto3
 import aws_cdk as cdk
 from cfn_stack.failing_nested_stack import FailingNestedStack
 from cfn_stack.failing_stack import FailingStack
 
 session = boto3.Session()
-region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name  
+region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name
 
 env = cdk.Environment(region=region)
 
@@ -30,4 +30,3 @@ if nested_stack_name:
     failing_nested_stack = FailingNestedStack(app, nested_stack_name, env=env)
 
 app.synth()
-

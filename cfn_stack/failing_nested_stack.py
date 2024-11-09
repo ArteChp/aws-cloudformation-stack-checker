@@ -4,8 +4,6 @@ from aws_cdk import (
     aws_cloudformation as cfn,
     Stack,
     RemovalPolicy,
-    App,
-    CfnParameter,
 )
 from constructs import Construct
 
@@ -24,7 +22,7 @@ class FailingNestedStack(Stack):
         )
 
         nested_template_deployment = s3_deployment.BucketDeployment(self, "NestedTemplateDeployment",
-            sources=[s3_deployment.Source.asset(f"cfn_stack/nested_stack_template")],
+            sources=[s3_deployment.Source.asset("cfn_stack/nested_stack_template")],
             destination_bucket=sample_bucket,
             destination_key_prefix=""
         )
@@ -35,5 +33,3 @@ class FailingNestedStack(Stack):
 
         nested_stack.node.add_dependency(sample_bucket)
         nested_stack.node.add_dependency(nested_template_deployment)
-
-

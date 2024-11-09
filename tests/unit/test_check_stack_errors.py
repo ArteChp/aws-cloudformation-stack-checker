@@ -1,14 +1,14 @@
-import boto3
 import json
 import unittest
 import os
+import boto3
 
 from check_stack import check_stack
 
 class TestStackErrors(unittest.TestCase):
 
     session = boto3.Session()
-    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name  
+    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name
 
     stack_name = "TestStack"
 
@@ -55,5 +55,3 @@ class TestStackErrors(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-

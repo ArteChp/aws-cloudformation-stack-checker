@@ -2,8 +2,6 @@ from aws_cdk import (
     aws_s3 as s3,
     Stack,
     RemovalPolicy,
-    App,
-    CfnParameter,
     CfnResource,
 )
 from constructs import Construct
@@ -20,8 +18,6 @@ class FailingStack(Stack):
             type="AWS::S3::Bucket",
             properties={
                 "BucketName": sample_bucket.bucket_name,
-                "NonExistentProperty": "InvalidValue"  # Invalid property that will cause a CloudFormation error
+                "NonExistentProperty": "InvalidValue"  
             }
         )
-
-

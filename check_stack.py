@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-import boto3
 import json
 import sys
 import logging
-import time 
+import time
 import os
 from typing import Tuple, Dict, Any
+import boto3
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ def get_rollback_details(cfn_client, stack_name: str) -> Dict[str, Any]:
         "ErrorMessage": None,
         "NestedStackError": None
     }
-    
+
     events = cfn_client.describe_stack_events(StackName=stack_name)['StackEvents']
     for event in events:
         if "FAILED" in event['ResourceStatus']:
@@ -45,15 +45,15 @@ def get_rollback_details(cfn_client, stack_name: str) -> Dict[str, Any]:
                         }
                         break
             break
-    
+
     return result
 
 def check_stack(stack_name: str) -> Dict[str, Any]:
     """Monitor stack status and retrieve rollback details if necessary."""
 
     session = boto3.Session()
-    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name  
-    
+    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name
+
     cfn_client = boto3.client('cloudformation', region_name=region)
 
     try:
@@ -62,7 +62,7 @@ def check_stack(stack_name: str) -> Dict[str, Any]:
             stack_status = cfn_stack['StackStatus']
 
             if not is_in_progress(stack_status):
-                break  
+                break
 
             time.sleep(5)
 

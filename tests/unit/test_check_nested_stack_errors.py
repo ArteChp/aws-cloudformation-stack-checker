@@ -1,15 +1,15 @@
-import boto3
 import json
 import unittest
 import time
 import os
+import boto3
 
 from check_stack import check_stack
 
 class TestNestedStackErrors(unittest.TestCase):
 
     session = boto3.Session()
-    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name  
+    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name
 
 
     stack_name = "TestNestedStack"
@@ -185,7 +185,7 @@ class TestNestedStackErrors(unittest.TestCase):
             time.sleep(10)
 
         cfn_client.delete_stack(StackName=self.stack_name)
-        
+
         waiter = cfn_client.get_waiter('stack_delete_complete')
         waiter.wait(StackName=self.stack_name)
 
@@ -204,8 +204,5 @@ class TestNestedStackErrors(unittest.TestCase):
         else:
             self.fail("Expected 'NestedStackError' in result but found None")
 
-
 if __name__ == "__main__":
     unittest.main()
-
-

@@ -58,8 +58,8 @@ The main components of this repository are:
 
 There are 2 ways to test the main script `check_stack.py`:
 
-1. Running unit tests (simple)
-2. Deploying failing sample stacks with AWS CDK and executing the script manualy
+1. Running unit tests (easy)
+2. Deploying failing sample stacks with AWS CDK and executing the script manualy (hard)
 
 ## Deployment steps
 

@@ -1,17 +1,21 @@
 import boto3
 import json
 import unittest
+import os
 
 from check_stack import check_stack
 
 class TestStackErrors(unittest.TestCase):
+
+    session = boto3.Session()
+    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name  
 
     stack_name = "TestStack"
 
     def setUp(self):
 
 
-        cfn = boto3.client('cloudformation', region_name='us-west-1')
+        cfn = boto3.client('cloudformation', region_name=self.region)
 
         cfn.create_stack(
             StackName=self.stack_name,
@@ -34,7 +38,7 @@ class TestStackErrors(unittest.TestCase):
         )
 
     def tearDown(self):
-        cfn = boto3.client('cloudformation', region_name='us-west-1')
+        cfn = boto3.client('cloudformation', region_name=self.region)
         cfn.delete_stack(
             StackName=self.stack_name
         )

@@ -2,10 +2,15 @@ import boto3
 import json
 import unittest
 import time
+import os
 
 from check_stack import check_stack
 
 class TestNestedStackErrors(unittest.TestCase):
+
+    session = boto3.Session()
+    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name  
+
 
     stack_name = "TestNestedStack"
     bucket_name = "test-nested-stack-s3-bucket"
@@ -123,8 +128,8 @@ class TestNestedStackErrors(unittest.TestCase):
     def setUp(self):
 
 
-        cfn_client = boto3.client('cloudformation', region_name='us-west-1')
-        s3_client = boto3.client('s3', region_name='us-west-1')
+        cfn_client = boto3.client('cloudformation', region_name=self.region)
+        s3_client = boto3.client('s3', region_name=self.region)
 
         cfn_client.create_stack(
             StackName=self.stack_name,
@@ -155,7 +160,7 @@ class TestNestedStackErrors(unittest.TestCase):
 
 
     def tearDown(self):
-        s3_client = boto3.client('s3', region_name='us-west-1')
+        s3_client = boto3.client('s3', region_name=self.region)
 
         objects = s3_client.list_objects_v2(Bucket=self.bucket_name)
 
@@ -168,7 +173,7 @@ class TestNestedStackErrors(unittest.TestCase):
             )
 
 
-        cfn_client = boto3.client('cloudformation', region_name='us-west-1')
+        cfn_client = boto3.client('cloudformation', region_name=self.region)
 
         while True:
             response = cfn_client.describe_stacks(StackName=self.stack_name)

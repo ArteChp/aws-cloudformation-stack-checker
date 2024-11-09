@@ -1,11 +1,15 @@
 import boto3
 import json
 import unittest
+import os
 from moto import mock_aws
 
 from check_stack import check_stack
 
 class TestStackStatus(unittest.TestCase):
+
+    session = boto3.Session()
+    region = os.environ.get("AWS_DEFAULT_REGION") or session.region_name  
 
     stack_name = "TestStack"
 
@@ -14,7 +18,7 @@ class TestStackStatus(unittest.TestCase):
         self.mock_aws.start()
 
 
-        cfn = boto3.client('cloudformation', region_name='us-west-1')
+        cfn = boto3.client('cloudformation', region_name=self.region)
 
         cfn.create_stack(
             StackName=self.stack_name,

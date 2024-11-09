@@ -13,7 +13,7 @@ Additionally:
 
 ## Prerequisites
 
-1. NodeJS (v. 22+) NodeJS is required for running and installing AWS CDK. You can download it [here](https://nodejs.org/en/download/).
+1. NodeJS (v. 22) NodeJS is required for running and installing AWS CDK. You can download it [here](https://nodejs.org/en/download/).
 2. AWS CDK (v. 2.166.0): Please install its [prerequisites](https://cdkworkshop.com/15-prerequisites.html) and follow the  [Python workshop](https://cdkworkshop.com/30-python.html) first.
 3. Python (v. 3.9.2) 
 
@@ -46,7 +46,7 @@ Additionally:
 
 The main components of this repository are:
 
-1. `check_stack.py` will check status, errors of a stack (or nested stacks) 
+1. `check_stack.py` will check status, error messages of a CloudFormation stack (or nested stacks) 
 2. `app.py`will deploy necessary stacks with AWS CDK for testing the main script #1
 3. `cfn_stack/failing_stack.py` will deploy a CloudFormation failing stack.
 4. `cfn_stack/failing_nested_stack.py` will deploy a CloudFormation failing nested stack and a healthy main stack.
@@ -59,7 +59,7 @@ The main components of this repository are:
 There are 2 ways to test the main script `check_stack.py`:
 
 1. Running unit tests (simple)
-2. Deploying failing sample stacks with AWS CDK and executing the script
+2. Deploying failing sample stacks with AWS CDK and executing the script manualy
 
 ## Deployment steps
 
@@ -123,16 +123,10 @@ Bootstrap the CDK stack:
 $ cdk bootstrap 
 ```
 
-Synthesize the CloudFormation template of the main stack:
+Synthesize the CloudFormation template of the main stack and the stack with the nested stack:
 
 ```
-$ cdk synth --app "python3 app.py --stack_name=FailedStackName"
-```
-
-Synthesize the CloudFormation template of the stack with the nested stack:
-
-```
-$ cdk synth --app "python3 app.py --nested_stack_name=FailedNestedStackName"
+$ cdk synth --app "python3 app.py --stack_name=FailedStackName --nested_stack_name=FailedNestedStackName"
 ```
 
 ### Deploy Failing Sample Stacks
@@ -147,7 +141,7 @@ $ cdk deploy --app "python3 app.py --stack_name=FailedStackName"
 Deploy the stack with the nested stack:
 
 ```
-$ cdk synth --app "python3 app.py --nested_stack_name=FailedNestedStackName"
+$ cdk deploy --app "python3 app.py --nested_stack_name=FailedNestedStackName"
 ```
 
 **Both stacks are expected to fail as part of the testing setup.**
@@ -178,11 +172,11 @@ $ python3 check_stack.py FailedNestedStackName
 
 ### Destroy the Stack
 
+Destroy the main stack and the stack with the nested stack:
+
 ```
-cdk destroy --all
+$ cdk destroy --all --app "python3 app.py --stack_name=FailedStackName --nested_stack_name=FailedNestedStackName"
 ```
 
 Enjoy!
-
-
 
